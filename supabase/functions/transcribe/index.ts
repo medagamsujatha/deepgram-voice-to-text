@@ -20,7 +20,9 @@ Deno.serve(async (req: Request) => {
 
     if (!apiKey) {
       return new Response(
-        JSON.stringify({ error: "Deepgram API key not configured" }),
+        JSON.stringify({
+          error: "Deepgram API key not configured. Please add your DEEPGRAM_API_KEY secret to your Supabase project."
+        }),
         {
           status: 500,
           headers: {

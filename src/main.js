@@ -1,5 +1,5 @@
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_SUPABASE_ANON_KEY;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 let mediaRecorder;
 let audioChunks = [];
@@ -20,15 +20,21 @@ async function fetchBalance() {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch balance');
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to fetch balance');
     }
 
     const data = await response.json();
+
+    if (data.error) {
+      throw new Error(data.error);
+    }
+
     balanceDisplay.textContent = `$${data.balance.toFixed(2)}`;
   } catch (error) {
     console.error('Error fetching balance:', error);
     balanceDisplay.textContent = 'Error loading';
-    showError('Failed to load wallet balance');
+    console.log('Balance error:', error.message);
   }
 }
 
@@ -86,10 +92,15 @@ async function transcribeAudio(audioBlob) {
     });
 
     if (!response.ok) {
-      throw new Error('Transcription failed');
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Transcription failed');
     }
 
     const data = await response.json();
+
+    if (data.error) {
+      throw new Error(data.error);
+    }
 
     if (data.transcript) {
       transcriptBox.textContent = data.transcript;
@@ -102,7 +113,7 @@ async function transcribeAudio(audioBlob) {
     await fetchBalance();
   } catch (error) {
     console.error('Error transcribing audio:', error);
-    showError('Failed to transcribe audio. Please try again.');
+    showError(error.message || 'Failed to transcribe audio. Please try again.');
     transcriptBox.textContent = 'Click "Start Recording" to begin...';
     transcriptBox.classList.add('empty');
   } finally {
