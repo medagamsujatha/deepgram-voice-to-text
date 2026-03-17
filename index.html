@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Notes Maker</title>
+  <link rel="stylesheet" href="/src/styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Voice Notes Maker</h1>
+      <div class="balance-display">
+        <span>Wallet Balance:</span>
+        <span id="balance" class="balance-amount">Loading...</span>
+      </div>
+    </header>
+
+    <main>
+      <div class="recording-controls">
+        <button id="recordBtn" class="btn btn-primary">
+          <span class="btn-icon">🎤</span>
+          <span class="btn-text">Start Recording</span>
+        </button>
+        <div id="recordingStatus" class="status hidden">
+          <span class="recording-indicator"></span>
+          <span>Recording...</span>
+        </div>
+      </div>
+
+      <div class="transcript-section">
+        <h2>Transcript</h2>
+        <div id="transcript" class="transcript-box">
+          Click "Start Recording" to begin...
+        </div>
+      </div>
+
+      <div id="error" class="error-message hidden"></div>
+    </main>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
